@@ -3,6 +3,7 @@ import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import Register from './pages/Register';
 import Jobs from './pages/Jobs';
+import ResumeUpload from './pages/ResumeUpload';
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/register" element={<Register />} />
         <Route path="/jobs" element={<Jobs />} />
+        <Route path="/resume" element={<ResumeUpload />} />
       </Routes>
     </BrowserRouter>
   );
