@@ -4,6 +4,7 @@ import Dashboard from './pages/Dashboard';
 import Register from './pages/Register';
 import Jobs from './pages/Jobs';
 import ResumeUpload from './pages/ResumeUpload';
+import CoverLetter from './pages/CoverLetter';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/jobs" element={<Jobs />} />
         <Route path="/resume" element={<ResumeUpload />} />
+        <Route path="/cover-letter" element={<CoverLetter />} />
       </Routes>
     </BrowserRouter>
   );
