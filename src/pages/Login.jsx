@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 function Login() {
     const [email, setEmail] = useState('');
@@ -25,7 +25,7 @@ function Login() {
     }
 
     return (
-        <div>
+        <div className="container">
             <h1>CareerPilot</h1>
             <h2>Login</h2>
             {error && <p style={{color: 'red'}}>{error}</p>}
@@ -34,7 +34,7 @@ function Login() {
                 <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)}/>
                 <button type="submit">Login</button>
             </form>
-            <p>No account? <a href="/register">Register</a></p>
+            <p>No account? <Link to="/register">Register</Link></p>
         </div>
     );
 }

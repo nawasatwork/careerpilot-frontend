@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 function Register() {
     const [name, setName] = useState('');
@@ -12,13 +12,12 @@ function Register() {
     async function handleSubmit(e) {
         e.preventDefault();
         try {
-            const res = await axios.post('http://localhost:5000/auth/register', {
+            await axios.post('http://localhost:5000/auth/register', {
                 name,
                 email,
                 password
             });
 
-            localStorage.setItem('user', JSON.stringify(res.data.user));
             navigate('/login');
         } catch (err) {
             setError(err.response?.data?.error || 'Registration failed')
@@ -26,7 +25,7 @@ function Register() {
     }
 
     return (
-        <div>
+        <div className="container">
             <h1>CareerPilot</h1>
             <h2>Register</h2>
             {error && <p style={{color: 'red'}}>{error}</p>}
@@ -36,7 +35,7 @@ function Register() {
                 <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)}/>
                 <button type="submit">Register</button>
             </form>
-            <p>Already registered? <a href="/login">Login</a></p>
+            <p>Already registered? <Link to="/login">Login</Link></p>
         </div>
     );
 }

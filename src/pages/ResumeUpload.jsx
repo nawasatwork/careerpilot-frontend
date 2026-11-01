@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Navbar from '../components/Navbar';
 import axios from 'axios';
 
 function ResumeUpload() {
@@ -28,16 +29,19 @@ function ResumeUpload() {
     }
 
     return (
-        <div>
-            <h1>Upload Resume</h1>
-            <input
-                type="file"
-                accept=".pdf"
-                onChange={(e) => setFile(e.target.files[0])}
-            />
-            <button onClick={handleUpload}>Upload</button>
-            {error && <p>{error}</p>}
-        </div>
+        <>
+        <Navbar />
+            <div className="container">
+                <h1>Upload Resume</h1>
+                <input
+                    type="file"
+                    accept=".pdf"
+                    onChange={(e) => setFile(e.target.files[0])}
+                />
+                <button onClick={handleUpload}>Upload</button>
+                {error && <p>{error}</p>}
+            </div>
+        </>
     );
 }
 
