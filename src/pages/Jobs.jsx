@@ -56,14 +56,16 @@ const DEFAULTS = {
     datePosted: 'month',
     limit: 10,
     minScore: 6,
+    freeOnly: false,
 };
 
 function toParams(filters) {
     const params = {};
     Object.entries(filters).forEach(([key, value]) => {
-        if (value !== '' && value !== null && value !== undefined) {
-            params[key] = String(value);
+        if (value === false || value === '' || value === null || value === undefined) {
+            return;
         }
+        params[key] = String(value);
     });
     return params;
 }
@@ -84,6 +86,7 @@ function parseFilters(searchParams) {
             : DEFAULTS.datePosted,
         limit: LIMITS.includes(limit) ? limit : DEFAULTS.limit,
         minScore: [6, 7, 8].includes(minScore) ? minScore : DEFAULTS.minScore,
+        freeOnly: searchParams.get('freeOnly') === '1',
     };
 }
 
@@ -109,7 +112,12 @@ function Jobs() {
 
         if (searchParams.toString().length > 0) {
             const initial = parseFilters(searchParams);
-            run({ ...initial, limit: Number(initial.limit), minScore: Number(initial.minScore) });
+            run({
+                ...initial,
+                limit: Number(initial.limit),
+                minScore: Number(initial.minScore),
+                freeOnly: initial.freeOnly ? '1' : '',
+            });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
@@ -126,6 +134,7 @@ function Jobs() {
             city: filters.city.trim(),
             limit: Number(filters.limit),
             minScore: Number(filters.minScore),
+            freeOnly: filters.freeOnly ? '1' : '',
         };
         setSearchParams(toParams(normalized));
         run(normalized);
@@ -261,12 +270,24 @@ function Jobs() {
 
                     <div className="mt-4 flex flex-wrap items-center justify-between gap-3 border-t border-border/60 pt-4">
                         <p className="max-w-2xl text-xs text-muted">
-                            We search using your resume&apos;s skills and only show jobs at or above your minimum match. Remote closing dates are checked; on-site results are recency-filtered because the source has no “closed” flag.
+                            We search using your resume&apos;s skills and only show jobs at or above your minimum match. Company sites and free boards are ranked first; paid aggregators are marked. Remote closing dates are checked; on-site results are recency-filtered because the source has no “closed” flag.
                         </p>
-                        <Button type="submit" disabled={loading}>
-                            {loading && <Spinner className="h-3.5 w-3.5" />}
-                            Search
-                        </Button>
+                        <div className="flex flex-wrap items-center gap-4">
+                            <label htmlFor="freeOnly" className="flex cursor-pointer items-center gap-2 text-sm text-muted">
+                                <input
+                                    id="freeOnly"
+                                    type="checkbox"
+                                    checked={filters.freeOnly}
+                                    onChange={(e) => setField('freeOnly', e.target.checked)}
+                                    className="h-4 w-4 rounded border-border bg-bg accent-accent"
+                                />
+                                Free to apply only
+                            </label>
+                            <Button type="submit" disabled={loading}>
+                                {loading && <Spinner className="h-3.5 w-3.5" />}
+                                Search
+                            </Button>
+                        </div>
                     </div>
                 </form>
 
