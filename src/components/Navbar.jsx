@@ -50,9 +50,9 @@ function Navbar() {
     return (
         <header className="sticky top-0 z-20 border-b border-border bg-bg/90 backdrop-blur">
             <nav className="mx-auto flex max-w-5xl items-center gap-1 px-4 py-3">
-                <Logo className="me-auto shrink-0" size={34} />
+                <Logo className="shrink-0" size={34} />
 
-                <div className="hidden items-center gap-0.5 md:flex">
+                <div className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-0.5 lg:flex">
                     {LINKS.map((link) => (
                         <NavLink key={link.to} to={link.to} className={linkClass}>
                             {link.label}
@@ -60,7 +60,7 @@ function Navbar() {
                     ))}
                 </div>
 
-                <div className="ms-3 hidden md:block">
+                <div className="ms-auto hidden lg:block">
                     <Button variant="ghost" size="sm" onClick={handleLogout}>
                         Logout
                     </Button>
@@ -72,7 +72,7 @@ function Navbar() {
                     aria-expanded={open}
                     aria-controls="mobile-nav"
                     onClick={() => setOpen((value) => !value)}
-                    className="ms-1 inline-flex h-10 w-10 items-center justify-center rounded-lg border border-border bg-surface-2 text-fg transition-colors hover:border-accent/60 md:hidden"
+                    className="ms-auto inline-flex h-10 w-10 items-center justify-center rounded-lg border border-border bg-surface-2 text-fg transition-colors hover:border-accent/60 lg:hidden"
                 >
                     <span className="sr-only">{open ? 'Close menu' : 'Open menu'}</span>
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" className="h-5 w-5" aria-hidden="true">
@@ -93,7 +93,7 @@ function Navbar() {
             </nav>
 
             {open && (
-                <div id="mobile-nav" className="border-t border-border bg-surface px-4 py-3 md:hidden">
+                <div id="mobile-nav" className="border-t border-border bg-surface px-4 py-3 lg:hidden">
                     <div className="flex flex-col gap-1">
                         {LINKS.map((link) => (
                             <NavLink
