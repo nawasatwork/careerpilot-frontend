@@ -270,7 +270,7 @@ function Jobs() {
 
                     <div className="mt-4 flex flex-wrap items-center justify-between gap-3 border-t border-border/60 pt-4">
                         <p className="max-w-2xl text-xs text-muted">
-                            We search using your resume&apos;s skills and only show jobs at or above your minimum match. Company sites and free boards are ranked first; paid aggregators are marked. Remote closing dates are checked; on-site results are recency-filtered because the source has no “closed” flag.
+                            We search using your resume&apos;s skills and only show jobs at or above your minimum match. Company sites and free boards rank first, and when one job is listed on both a paid and a free board you get the free link. Ticking free-only asks the provider for more pages so the list still fills. Remote closing dates are checked; on-site results are recency-filtered because the source has no “closed” flag.
                         </p>
                         <div className="flex flex-wrap items-center gap-4">
                             <label htmlFor="freeOnly" className="flex cursor-pointer items-center gap-2 text-sm text-muted">
@@ -281,7 +281,7 @@ function Jobs() {
                                     onChange={(e) => setField('freeOnly', e.target.checked)}
                                     className="h-4 w-4 rounded border-border bg-bg accent-accent"
                                 />
-                                Free to apply only
+                                Free listings first
                             </label>
                             <Button type="submit" disabled={loading}>
                                 {loading && <Spinner className="h-3.5 w-3.5" />}
