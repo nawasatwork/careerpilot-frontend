@@ -88,26 +88,12 @@ function JobCard({ job, onCoverLetter, onInterview, style }) {
                 </a>
                 {job.applyType && (
                     <span
-                        title={
-                            job.applyType === 'direct'
-                                ? 'Opens the company’s own application page'
-                                : job.applyType === 'paid'
-                                    ? `Listed on ${job.applyVia}, which may require a paid subscription`
-                                    : `Opens on ${job.applyVia}`
-                        }
+                        title={job.applyType === 'direct' ? 'Opens the company’s own application page' : `Opens on ${job.applyVia}`}
                         className={`rounded-md px-2 py-0.5 text-[11px] font-medium ${
-                            job.applyType === 'direct'
-                                ? 'bg-accent/15 text-accent'
-                                : job.applyType === 'paid'
-                                    ? 'bg-warn/15 text-warn'
-                                    : 'bg-surface-2 text-muted'
+                            job.applyType === 'direct' ? 'bg-accent/15 text-accent' : 'bg-surface-2 text-muted'
                         }`}
                     >
-                        {job.applyType === 'direct'
-                            ? 'Company site'
-                            : job.applyType === 'paid'
-                                ? `Paid: ${job.applyVia}`
-                                : `via ${job.applyVia}`}
+                        {job.applyType === 'direct' ? 'Company site' : `via ${job.applyVia}`}
                     </span>
                 )}
                 <Button variant="secondary" size="sm" onClick={onCoverLetter}>Cover letter</Button>

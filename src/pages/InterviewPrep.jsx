@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import PageHeader from '../components/PageHeader';
@@ -25,6 +25,24 @@ function InterviewPrep() {
     const [loading, setLoading] = useState(false);
 
     const cameFromJob = Boolean(state?.job);
+
+    // The backend returns a strict "Q: ...\n\nA: ..." shape; split it for rendering.
+    const pairs = useMemo(() => {
+        if (!prep) {
+            return [];
+        }
+        const found = [];
+        const blocks = prep.split(/(?=^Q: )/m);
+
+        for (const block of blocks) {
+            const match = block.match(/^Q: ([\s\S]*?)\n+A: ([\s\S]*)$/);
+            if (match) {
+                found.push({ question: match[1].trim(), answer: match[2].trim() });
+            }
+        }
+
+        return found;
+    }, [prep]);
 
     async function generate() {
         setError('');
@@ -108,7 +126,23 @@ function InterviewPrep() {
                             <h2 className="text-sm font-semibold uppercase tracking-wide text-muted">Questions</h2>
                             <Button variant="ghost" size="sm" onClick={copy}>Copy</Button>
                         </div>
-                        <p className="whitespace-pre-wrap break-words text-sm leading-relaxed text-fg/90">{prep}</p>
+                        {pairs.length > 0 ? (
+                            <ol className="space-y-5">
+                                {pairs.map((pair, index) => (
+                                    <li key={index}>
+                                        <p className="break-words font-semibold leading-snug text-fg">
+                                            <span className="me-2 text-accent">{index + 1}.</span>
+                                            {pair.question}
+                                        </p>
+                                        <p className="mt-2 whitespace-pre-wrap break-words border-s-2 border-border ps-3 text-sm leading-relaxed text-fg/80">
+                                            {pair.answer}
+                                        </p>
+                                    </li>
+                                ))}
+                            </ol>
+                        ) : (
+                            <p className="whitespace-pre-wrap break-words text-sm leading-relaxed text-fg/90">{prep}</p>
+                        )}
                     </Card>
                 )}
             </main>
