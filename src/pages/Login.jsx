@@ -9,6 +9,11 @@ import { useDocumentTitle } from '../hooks/useDocumentTitle';
 import { api, getErrorMessage } from '../lib/api';
 import { setSession } from '../lib/auth';
 
+// Public showcase credentials. This is a demo account with fictional sample data,
+// so it is safe to show. Prefilled to keep a portfolio walkthrough friction-free.
+const DEMO_EMAIL = 'demo@careerpilot.app';
+const DEMO_PASSWORD = 'DemoCareer2026';
+
 function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -36,6 +41,12 @@ function Login() {
         } finally {
             setLoading(false);
         }
+    }
+
+    function fillDemo() {
+        setEmail(DEMO_EMAIL);
+        setPassword(DEMO_PASSWORD);
+        setError('');
     }
 
     return (
@@ -83,6 +94,20 @@ function Login() {
                     Sign in
                 </Button>
             </form>
+
+            <div className="mt-4 rounded-xl border border-border bg-surface-2/60 p-4 text-sm">
+                <p className="text-xs font-semibold uppercase tracking-[0.14em] text-muted">Demo account</p>
+                <p className="mt-2 text-muted">
+                    Explore the app with a populated profile. The résumé is fictional sample data.
+                </p>
+                <div className="mt-3 space-y-1 font-mono text-xs text-fg">
+                    <p>{DEMO_EMAIL}</p>
+                    <p>{DEMO_PASSWORD}</p>
+                </div>
+                <Button variant="secondary" size="sm" className="mt-3 w-full" onClick={fillDemo}>
+                    Use demo account
+                </Button>
+            </div>
         </AuthShell>
     );
 }
